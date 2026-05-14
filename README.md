@@ -12,6 +12,7 @@ Dotfiles personales para Hyprland en Debian Trixie, gestionados con GNU Stow.
 - **Tema:** Catppuccin Mocha
 - **Fuente:** JetBrainsMono Nerd Font
 - **Gestión:** GNU Stow
+- **Repo:** github.com/JuanesEspinosa/jumi-dotfile
 
 ## Estructura
 
