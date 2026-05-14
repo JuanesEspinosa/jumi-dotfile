@@ -1,0 +1,105 @@
+@import "themes/current.css";
+
+* {
+  font-family: "JetBrainsMono Nerd Font", monospace;
+  font-size: 13px;
+  border: none;
+  border-radius: 0;
+  min-height: 0;
+}
+
+window#waybar {
+  background: transparent;
+  color: @text;
+}
+
+/* Grupos de módulos — isla flotante */
+.modules-left,
+.modules-center,
+.modules-right {
+  background-color: @bar_bg;
+  border: 1px solid @bar_border;
+  border-radius: 12px;
+  padding: 4px 8px;
+  margin: 6px 0;
+}
+
+/* Workspaces */
+#workspaces button {
+  padding: 2px 8px;
+  color: @text_muted;
+  border-radius: 8px;
+  transition: all 0.2s;
+  background: transparent;
+}
+
+#workspaces button.active {
+  background-color: @module_bg;
+  color: @accent;
+}
+
+#workspaces button.urgent {
+  color: @critical;
+}
+
+#workspaces button:hover {
+  background-color: @surface0;
+  color: @text;
+}
+
+/* Ventana activa */
+#window {
+  color: @text_muted;
+  padding: 0 8px;
+}
+
+/* Reloj */
+#clock {
+  color: @accent;
+  font-weight: bold;
+  padding: 0 8px;
+}
+
+/* Batería */
+#battery {
+  padding: 0 8px;
+}
+
+#battery.warning {
+  color: @warning;
+}
+
+#battery.critical {
+  color: @critical;
+  font-weight: bold;
+}
+
+/* Red */
+#network {
+  padding: 0 8px;
+}
+
+#network.disconnected {
+  color: @critical;
+}
+
+/* Audio */
+#pulseaudio {
+  padding: 0 8px;
+}
+
+#pulseaudio.muted {
+  color: @text_muted;
+}
+
+/* Tray */
+#tray {
+  padding: 0 4px;
+}
+
+/* Módulo custom */
+#custom-project {
+  color: @success;
+  padding: 0 8px;
+}
+

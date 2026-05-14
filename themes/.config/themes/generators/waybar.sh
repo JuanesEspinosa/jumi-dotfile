@@ -7,26 +7,22 @@ mkdir -p "$(dirname "$OUTPUT")"
 
 cat > "$OUTPUT" << EOF
 /* Tema generado automaticamente — NO editar manualmente */
-:root {
-  --base:       ${BASE};
-  --mantle:     ${MANTLE};
-  --crust:      ${CRUST};
-  --surface0:   ${SURFACE0};
-  --surface1:   ${SURFACE1};
-  --text:       ${TEXT};
-  --subtext0:   ${SUBTEXT0};
-  --accent:     ${ACCENT};
-  --accent-alt: ${ACCENT_ALT};
-  --warning:    ${WARNING};
-  --critical:   ${CRITICAL};
-  --success:    ${SUCCESS};
-  --bar-bg:       ${BASE};
-  --bar-border:   ${SURFACE0};
-  --module-bg:    ${MANTLE};
-  --module-hover: ${SURFACE0};
-  --text-primary: ${TEXT};
-  --text-muted:   ${SUBTEXT0};
-}
+@define-color base       ${BASE};
+@define-color mantle     ${MANTLE};
+@define-color crust      ${CRUST};
+@define-color surface0   ${SURFACE0};
+@define-color surface1   ${SURFACE1};
+@define-color text       ${TEXT};
+@define-color subtext0   ${SUBTEXT0};
+@define-color accent     ${ACCENT};
+@define-color accent_alt ${ACCENT_ALT};
+@define-color warning    ${WARNING};
+@define-color critical   ${CRITICAL};
+@define-color success    ${SUCCESS};
+@define-color bar_bg     ${BASE};
+@define-color bar_border ${SURFACE0};
+@define-color module_bg  ${MANTLE};
+@define-color text_muted ${SUBTEXT0};
 EOF
 
 echo "  ✓ Waybar theme generado"

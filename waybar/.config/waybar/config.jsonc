@@ -1,0 +1,94 @@
+[
+  {
+    "layer": "top",
+    "position": "top",
+    "height": 36,
+    "spacing": 4,
+    "margin-top": 6,
+    "margin-left": 10,
+    "margin-right": 10,
+
+    "modules-left": [
+      "hyprland/workspaces",
+      "hyprland/window"
+    ],
+    "modules-center": [
+      "clock"
+    ],
+    "modules-right": [
+      "custom/project",
+      "pulseaudio",
+      "network",
+      "battery",
+      "tray"
+    ],
+
+    "hyprland/workspaces": {
+      "format": "{icon}",
+      "format-icons": {
+        "1": "󰈹",
+        "2": "󰨞",
+        "3": "󰖟",
+        "4": "󰆼",
+        "5": "󰭹",
+        "urgent": "",
+        "active": "",
+        "default": ""
+      },
+      "persistent-workspaces": {
+        "*": [1, 2, 3, 4, 5]
+      }
+    },
+
+    "hyprland/window": {
+      "format": "{}",
+      "max-length": 40
+    },
+
+    "clock": {
+      "format": "󰥔 {:%H:%M}",
+      "format-alt": "󰃶 {:%A, %d %B %Y}",
+      "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+    },
+
+    "battery": {
+      "states": {
+        "warning": 30,
+        "critical": 15
+      },
+      "format": "{icon} {capacity}%",
+      "format-charging": "󰂄 {capacity}%",
+      "format-plugged": "󰚥 {capacity}%",
+      "format-icons": ["󰁺","󰁻","󰁼","󰁽","󰁾","󰁿","󰂀","󰂁","󰂂","󰁹"]
+    },
+
+    "network": {
+      "format-wifi": "󰤨 {signalStrength}%",
+      "format-ethernet": "󰈀 {ifname}",
+      "format-disconnected": "󰤭 Sin red",
+      "tooltip-format-wifi": "{essid} — {signalStrength}% — {ipaddr}",
+      "on-click": "nm-connection-editor",
+      "interval": 10
+    },
+
+    "pulseaudio": {
+      "format": "{icon} {volume}%",
+      "format-muted": "󰝟",
+      "format-icons": {
+        "default": ["󰕿", "󰖀", "󰕾"]
+      },
+      "on-click": "pavucontrol"
+    },
+
+    "tray": {
+      "spacing": 8
+    },
+
+    "custom/project": {
+      "exec": "~/.config/waybar/modules/project-status.sh",
+      "interval": 30,
+      "format": "󰏗 {}",
+      "tooltip": true
+    }
+  }
+]
