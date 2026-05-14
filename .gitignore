@@ -1,0 +1,5 @@
+# Archivos generados por theme-switch.sh (estado runtime)
+themes/.config/themes/current
+
+# Archivos generados por los generadores de tema (no versionar)
+# Se recrean con theme-switch.sh mocha
