@@ -97,9 +97,15 @@ window#waybar {
   padding: 0 4px;
 }
 
-/* Módulo custom */
+/* Módulos custom */
 #custom-project {
   color: @success;
   padding: 0 8px;
+}
+
+#custom-power {
+  color: @critical;
+  padding: 0 8px;
+  font-size: 15px;
 }
 
