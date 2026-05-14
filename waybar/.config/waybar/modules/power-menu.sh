@@ -1,18 +1,26 @@
 #!/usr/bin/env bash
-# Menú de power via wofi --dmenu
+# Menú de power — usa wofi si está disponible, si no rofi
 
 options="󰐥  Apagar\n󰜉  Reiniciar\n󰒲  Suspender\n󰍃  Cerrar sesion"
 
-chosen=$(echo -e "$options" | wofi --dmenu \
-  --prompt "Power" \
-  --lines 4 \
-  --width 220 \
-  --height 180 \
-  --cache-file /dev/null)
+if command -v wofi &>/dev/null; then
+  chosen=$(echo -e "$options" | wofi --dmenu \
+    --prompt "Power" \
+    --lines 4 \
+    --width 220 \
+    --cache-file /dev/null)
+elif command -v rofi &>/dev/null; then
+  chosen=$(echo -e "$options" | rofi -dmenu \
+    -p "Power" \
+    -lines 4 \
+    -width 220)
+else
+  exit 1
+fi
 
 case "$chosen" in
-  *Apagar*)        systemctl poweroff ;;
-  *Reiniciar*)     systemctl reboot ;;
-  *Suspender*)     systemctl suspend ;;
+  *Apagar*)          systemctl poweroff ;;
+  *Reiniciar*)       systemctl reboot ;;
+  *Suspender*)       systemctl suspend ;;
   *"Cerrar sesion"*) hyprctl dispatch exit ;;
 esac
