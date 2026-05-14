@@ -1,0 +1,89 @@
+# starship.toml — Catppuccin Mocha
+
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+[](color_orange)\
+$os\
+$username\
+[](bg:color_yellow fg:color_orange)\
+$directory\
+[](fg:color_yellow bg:color_aqua)\
+$git_branch\
+$git_status\
+[](fg:color_aqua bg:color_blue)\
+$nodejs\
+$rust\
+$python\
+[](fg:color_blue bg:color_bg1)\
+$time\
+[ ](fg:color_bg1)\
+$line_break$character"""
+
+palette = 'catppuccin_mocha'
+
+[palettes.catppuccin_mocha]
+color_fg0    = '#cdd6f4'
+color_bg1    = '#313244'
+color_bg3    = '#45475a'
+color_orange = '#fab387'
+color_yellow = '#f9e2af'
+color_aqua   = '#94e2d5'
+color_blue   = '#89b4fa'
+color_green  = '#a6e3a1'
+color_red    = '#f38ba8'
+color_mauve  = '#cba6f7'
+
+[os]
+disabled = false
+style = "bg:color_orange fg:color_bg1"
+
+[os.symbols]
+Linux = ""
+Debian = ""
+
+[username]
+show_always = true
+style_user = "bg:color_orange fg:color_bg1"
+style_root = "bg:color_orange fg:color_bg1"
+format = '[ $user ]($style)'
+
+[directory]
+style = "fg:color_bg1 bg:color_yellow"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[git_branch]
+symbol = ""
+style = "bg:color_aqua fg:color_bg1"
+format = '[[ $symbol $branch ](fg:color_bg1 bg:color_aqua)]($style)'
+
+[git_status]
+style = "bg:color_aqua fg:color_bg1"
+format = '[[($all_status$ahead_behind )](fg:color_bg1 bg:color_aqua)]($style)'
+
+[nodejs]
+symbol = ""
+style = "bg:color_blue fg:color_bg1"
+format = '[[ $symbol ($version) ](fg:color_bg1 bg:color_blue)]($style)'
+
+[python]
+symbol = ""
+style = "bg:color_blue fg:color_bg1"
+format = '[[ $symbol ($version) ](fg:color_bg1 bg:color_blue)]($style)'
+
+[rust]
+symbol = ""
+style = "bg:color_blue fg:color_bg1"
+format = '[[ $symbol ($version) ](fg:color_bg1 bg:color_blue)]($style)'
+
+[time]
+disabled = false
+time_format = "%H:%M"
+style = "bg:color_bg1 fg:color_fg0"
+format = '[[  $time ](fg:color_fg0 bg:color_bg1)]($style)'
+
+[character]
+success_symbol = '[❯](bold green)'
+error_symbol = '[❯](bold red)'
