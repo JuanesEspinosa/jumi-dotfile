@@ -1,0 +1,76 @@
+/* Catppuccin Mocha — hardcoded (wlogout no usa GTK CSS variables) */
+
+window {
+  background-color: rgba(17, 17, 27, 0.88);
+  font-family: "JetBrainsMono Nerd Font", monospace;
+}
+
+button {
+  background-color: rgba(30, 30, 46, 0.7);
+  border: 1px solid rgba(69, 71, 90, 0.6);
+  border-radius: 16px;
+  color: #a6adc8;
+  font-size: 15px;
+  font-weight: bold;
+  margin: 10px;
+  padding-top: 90px;
+  background-repeat: no-repeat;
+  background-position: center 28%;
+  background-size: 60px;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+button:focus {
+  outline: none;
+  background-color: rgba(49, 50, 68, 0.7);
+}
+
+/* Lock — verde */
+#lock {
+  background-image: image(url("/usr/share/wlogout/icons/lock.png"));
+}
+#lock:hover {
+  background-color: rgba(166, 227, 161, 0.15);
+  border-color: #a6e3a1;
+  color: #a6e3a1;
+}
+
+/* Logout — azul */
+#logout {
+  background-image: image(url("/usr/share/wlogout/icons/logout.png"));
+}
+#logout:hover {
+  background-color: rgba(137, 180, 250, 0.15);
+  border-color: #89b4fa;
+  color: #89b4fa;
+}
+
+/* Suspend — amarillo */
+#suspend {
+  background-image: image(url("/usr/share/wlogout/icons/suspend.png"));
+}
+#suspend:hover {
+  background-color: rgba(249, 226, 175, 0.15);
+  border-color: #f9e2af;
+  color: #f9e2af;
+}
+
+/* Reboot — naranja */
+#reboot {
+  background-image: image(url("/usr/share/wlogout/icons/reboot.png"));
+}
+#reboot:hover {
+  background-color: rgba(250, 179, 135, 0.15);
+  border-color: #fab387;
+  color: #fab387;
+}
+
+/* Shutdown — rojo */
+#shutdown {
+  background-image: image(url("/usr/share/wlogout/icons/shutdown.png"));
+}
+#shutdown:hover {
+  background-color: rgba(243, 139, 168, 0.15);
+  border-color: #f38ba8;
+  color: #f38ba8;
+}

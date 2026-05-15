@@ -2,11 +2,11 @@
   {
     "layer": "top",
     "position": "top",
-    "height": 36,
-    "spacing": 4,
+    "height": 48,
+    "spacing": 0,
     "margin-top": 6,
-    "margin-left": 10,
-    "margin-right": 10,
+    "margin-left": 12,
+    "margin-right": 12,
 
     "modules-left": [
       "hyprland/workspaces",
@@ -16,10 +16,11 @@
       "clock"
     ],
     "modules-right": [
-      "custom/project",
-      "pulseaudio",
+      "temperature",
+      "cpu",
+      "memory",
       "network",
-      "battery",
+      "pulseaudio",
       "tray",
       "custom/power"
     ],
@@ -32,9 +33,7 @@
         "3": "󰖟",
         "4": "󰆼",
         "5": "󰭹",
-        "urgent": "",
-        "active": "",
-        "default": ""
+        "urgent": ""
       },
       "persistent-workspaces": {
         "*": [1, 2, 3, 4, 5]
@@ -42,60 +41,75 @@
     },
 
     "hyprland/window": {
-      "format": "{}",
-      "max-length": 40
+      "format": "  {}",
+      "max-length": 40,
+      "separate-outputs": true,
+      "rewrite": {
+        "(.*) — Mozilla Firefox": "󰈹 $1",
+        "(.*) - kitty": "󰆍 $1",
+        "": ""
+      }
     },
 
     "clock": {
-      "format": "󰥔 {:%H:%M}",
-      "format-alt": "󰃶 {:%A, %d %B %Y}",
-      "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+      "format": "󰥔  {:%H:%M  ·  %a %d %b}",
+      "format-alt": "󰃶  {:%A, %d de %B de %Y}",
+      "tooltip-format": "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>",
+      "interval": 60
     },
 
-    "battery": {
-      "states": {
-        "warning": 30,
-        "critical": 15
-      },
-      "format": "{icon} {capacity}%",
-      "format-charging": "󰂄 {capacity}%",
-      "format-plugged": "󰚥 {capacity}%",
-      "format-icons": ["󰁺","󰁻","󰁼","󰁽","󰁾","󰁿","󰂀","󰂁","󰂂","󰁹"]
+    "temperature": {
+      "thermal-zone": 0,
+      "critical-threshold": 80,
+      "format": "󰔏 {temperatureC}°",
+      "format-critical": "󰸁 {temperatureC}°",
+      "interval": 5,
+      "tooltip": false
+    },
+
+    "cpu": {
+      "format": "󰻠 {usage}%",
+      "interval": 2,
+      "tooltip": false
+    },
+
+    "memory": {
+      "format": "󰍛 {used:.1f}G",
+      "interval": 5,
+      "tooltip-format": "RAM: {used:.1f}G / {total:.1f}G\nSwap: {swapUsed:.1f}G / {swapTotal:.1f}G"
     },
 
     "network": {
-      "format-wifi": "󰤨 {signalStrength}%",
-      "format-ethernet": "󰈀 {ifname}",
-      "format-disconnected": "󰤭 Sin red",
-      "tooltip-format-wifi": "{essid} — {signalStrength}% — {ipaddr}",
-      "on-click": "nm-connection-editor",
+      "format-wifi": "󰤨  {essid}",
+      "format-ethernet": "󰈀  {ifname}",
+      "format-disconnected": "󰤭  Sin red",
+      "tooltip-format-wifi": "{essid}  ·  {signalStrength}%  ·  {ipaddr}",
+      "tooltip-format-ethernet": "{ifname}  ·  {ipaddr}",
+      "max-length": 18,
       "interval": 10
     },
 
     "pulseaudio": {
-      "format": "{icon} {volume}%",
-      "format-muted": "󰝟",
+      "format": "{icon}  {volume}%",
+      "format-muted": "󰝟  Muted",
       "format-icons": {
         "default": ["󰕿", "󰖀", "󰕾"]
       },
-      "on-click": "pavucontrol"
+      "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+      "on-click-right": "~/.config/waybar/modules/volume-control.sh",
+      "scroll-step": 5,
+      "tooltip": false
     },
 
     "tray": {
-      "spacing": 8
-    },
-
-    "custom/project": {
-      "exec": "~/.config/waybar/modules/project-status.sh",
-      "interval": 30,
-      "format": "󰏗 {}",
-      "tooltip": true
+      "spacing": 8,
+      "icon-size": 15
     },
 
     "custom/power": {
-      "format": "󰐥",
+      "format": "  󰐥",
       "on-click": "~/.config/waybar/modules/power-menu.sh",
-      "tooltip-text": "Menú de power"
+      "tooltip": false
     }
   }
 ]
