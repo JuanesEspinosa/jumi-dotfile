@@ -48,6 +48,9 @@ APT_PACKAGES=(
   # Archivos
   nautilus
 
+  # Temas GTK e iconos
+  papirus-icon-theme
+
   # Fuentes
   fonts-jetbrains-mono
 
@@ -173,6 +176,36 @@ else
   warn "theme-switch.sh no encontrado — aplica stow themes primero"
 fi
 
+# ── GTK Theming ───────────────────────────────────────────────────────────────
+header "GTK Theming (Catppuccin Mocha Mauve)"
+THEME_DIR="$HOME/.local/share/themes/catppuccin-mocha-mauve"
+
+if [[ ! -d "$THEME_DIR" ]]; then
+  log "Descargando tema GTK Catppuccin Mocha Mauve..."
+  GTK_URL=$(curl -s https://api.github.com/repos/catppuccin/gtk/releases/latest \
+    | grep -o '"browser_download_url": "[^"]*mocha-mauve[^"]*"' \
+    | grep -o 'https://[^"]*' | head -1)
+  if [[ -n "$GTK_URL" ]]; then
+    wget -qO /tmp/catppuccin-gtk.zip "$GTK_URL"
+    unzip -q /tmp/catppuccin-gtk.zip -d /tmp/catppuccin-gtk
+    mkdir -p "$HOME/.local/share/themes"
+    cp -r /tmp/catppuccin-gtk/catppuccin-mocha-mauve-standard+default "$THEME_DIR"
+    rm -rf /tmp/catppuccin-gtk.zip /tmp/catppuccin-gtk
+    ok "Tema GTK instalado"
+  else
+    warn "No se pudo descargar el tema GTK — instálalo manualmente"
+  fi
+else
+  ok "Tema GTK ya instalado"
+fi
+
+log "Aplicando tema GTK, iconos y cursor..."
+gsettings set org.gnome.desktop.interface gtk-theme      'catppuccin-mocha-mauve'
+gsettings set org.gnome.desktop.interface icon-theme     'Papirus-Dark'
+gsettings set org.gnome.desktop.interface cursor-theme   'Bibata-Modern-Classic'
+gsettings set org.gnome.desktop.interface font-name      'JetBrainsMono Nerd Font 11'
+ok "GTK theme, iconos y cursor aplicados"
+
 # ── Resumen ───────────────────────────────────────────────────────────────────
 echo -e "\n${GREEN}${BOLD}━━━ Instalación completa ━━━${NC}"
 echo -e "
@@ -180,7 +213,7 @@ echo -e "
   1. Reinicia la sesión para que los cambios de shell tomen efecto
   2. Entra a Hyprland (si no está instalado: bash <script de JaKooLit>)
   3. ${BOLD}SUPER+SHIFT+R${NC} para recargar Hyprland
-  4. Instala GTK Catppuccin theme para theming completo
+  4. Abre nautilus para verificar el tema GTK Catppuccin Mocha Mauve
 
   ${BOLD}Keybinds principales:${NC}
   ALT+Space       → App launcher (wofi)
