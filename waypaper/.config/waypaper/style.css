@@ -1,0 +1,123 @@
+/* waypaper style.css — Catppuccin Mocha */
+
+* {
+    font-family: "JetBrainsMono Nerd Font", monospace;
+    color: #cdd6f4;
+}
+
+window {
+    background-color: #1e1e2e;
+}
+
+/* Barra superior */
+headerbar {
+    background-color: #181825;
+    border-bottom: 1px solid #313244;
+    box-shadow: none;
+}
+
+headerbar button {
+    background-color: transparent;
+    border: none;
+    border-radius: 6px;
+    padding: 4px 8px;
+    color: #cdd6f4;
+}
+
+headerbar button:hover {
+    background-color: #313244;
+}
+
+/* Grid de miniaturas */
+flowbox {
+    background-color: #1e1e2e;
+    padding: 12px;
+}
+
+flowboxchild {
+    border-radius: 8px;
+    padding: 4px;
+    border: 2px solid transparent;
+    transition: border-color 150ms ease;
+}
+
+flowboxchild:hover {
+    border-color: #45475a;
+}
+
+flowboxchild:selected {
+    background-color: transparent;
+    border-color: #b4befe;
+}
+
+/* Panel lateral */
+.sidebar, scrolledwindow {
+    background-color: #181825;
+}
+
+/* Botones de acción */
+button {
+    background-color: #313244;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 16px;
+    color: #cdd6f4;
+    transition: background-color 150ms ease;
+}
+
+button:hover {
+    background-color: #45475a;
+    color: #b4befe;
+}
+
+button.suggested-action {
+    background-color: #b4befe;
+    color: #1e1e2e;
+}
+
+button.suggested-action:hover {
+    background-color: #cdd6f4;
+}
+
+/* Etiquetas y tooltips */
+tooltip {
+    background-color: #181825;
+    border: 1px solid #313244;
+    border-radius: 6px;
+    color: #a6adc8;
+}
+
+/* Scrollbar */
+scrollbar {
+    background-color: transparent;
+}
+
+scrollbar slider {
+    background-color: #45475a;
+    border-radius: 4px;
+    min-width: 4px;
+    min-height: 4px;
+}
+
+scrollbar slider:hover {
+    background-color: #585b70;
+}
+
+/* Menú desplegable (folder selector) */
+combobox button {
+    background-color: #313244;
+    border-radius: 8px;
+}
+
+/* Entry de texto */
+entry {
+    background-color: #313244;
+    border: 1px solid #45475a;
+    border-radius: 8px;
+    padding: 6px 10px;
+    color: #cdd6f4;
+}
+
+entry:focus {
+    border-color: #b4befe;
+}

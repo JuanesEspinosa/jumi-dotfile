@@ -1,0 +1,52 @@
+/* theme-picker.rasi — selector de temas Catppuccin */
+
+@import "catppuccin-current.rasi"
+
+* {
+    font: "JetBrainsMono Nerd Font 14";
+}
+
+window {
+    width:   340px;
+    padding: 14px;
+}
+
+mainbox {
+    children: [ inputbar, message, listview ];
+    spacing:  10px;
+}
+
+inputbar {
+    padding: 12px 16px;
+}
+
+prompt {
+    font: "JetBrainsMono Nerd Font 20";
+}
+
+message {
+    background-color: transparent;
+    padding:          0 4px;
+}
+
+textbox {
+    text-color: @fg1;
+    font:       "JetBrainsMono Nerd Font 11";
+}
+
+listview {
+    lines:    6;
+    spacing:  4px;
+}
+
+element {
+    padding: 12px 16px;
+}
+
+element-text {
+    font: "JetBrainsMono Nerd Font 14";
+}
+
+element.selected.normal {
+    background-color: @bg2;
+}
