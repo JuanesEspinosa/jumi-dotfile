@@ -6,7 +6,7 @@ export PAGER="bat --paging=always"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
 # PATH
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$HOME/.npm-global/bin:$PATH"
 
 # fzf — usar ripgrep como fuente, ignorar .git y node_modules
 export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!.git" --glob "!node_modules"'
