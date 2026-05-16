@@ -76,6 +76,16 @@ else
   ok "Todos los paquetes APT ya están instalados"
 fi
 
+# ── Waypaper ──────────────────────────────────────────────────────────────────
+header "Waypaper (selector de fondos)"
+if ! command -v waypaper &>/dev/null; then
+  log "Instalando waypaper..."
+  pip3 install --user --break-system-packages waypaper
+  ok "Waypaper instalado"
+else
+  ok "Waypaper ya instalado: $(waypaper --version 2>/dev/null)"
+fi
+
 # ── Starship ──────────────────────────────────────────────────────────────────
 header "Starship prompt"
 if ! command -v starship &>/dev/null; then
@@ -141,8 +151,8 @@ header "Aplicando paquetes stow"
 
 STOW_PACKAGES=(
   hyprland kitty zsh tmux starship
-  waybar wofi themes
-  swappy wlogout yazi
+  waybar wofi themes rofi
+  swappy wlogout yazi waypaper
 )
 
 cd "$DOTFILES_DIR"
@@ -177,34 +187,70 @@ else
 fi
 
 # ── GTK Theming ───────────────────────────────────────────────────────────────
-header "GTK Theming (Catppuccin Mocha Mauve)"
+header "GTK Theming (Catppuccin — Mocha y Latte)"
+
+install_gtk_flavor() {
+  local FLAVOR="$1"
+  local THEME_DIR="$HOME/.local/share/themes/catppuccin-${FLAVOR}-mauve"
+  if [[ ! -d "$THEME_DIR" ]]; then
+    log "Descargando tema GTK Catppuccin ${FLAVOR^} Mauve..."
+    GTK_URL=$(curl -s https://api.github.com/repos/catppuccin/gtk/releases/latest \
+      | grep -o "\"browser_download_url\": \"[^\"]*${FLAVOR}-mauve[^\"]*\"" \
+      | grep -o 'https://[^"]*' | head -1)
+    if [[ -n "$GTK_URL" ]]; then
+      wget -qO /tmp/catppuccin-gtk.zip "$GTK_URL"
+      unzip -q /tmp/catppuccin-gtk.zip -d /tmp/catppuccin-gtk
+      mkdir -p "$HOME/.local/share/themes"
+      cp -r "/tmp/catppuccin-gtk/catppuccin-${FLAVOR}-mauve-standard+default" "$THEME_DIR"
+      rm -rf /tmp/catppuccin-gtk.zip /tmp/catppuccin-gtk
+      ok "Tema GTK ${FLAVOR^} instalado"
+    else
+      warn "No se pudo descargar el tema GTK ${FLAVOR^} — instálalo manualmente"
+    fi
+  else
+    ok "Tema GTK ${FLAVOR^} ya instalado"
+  fi
+}
+
+install_gtk_flavor mocha
+install_gtk_flavor latte
+
 THEME_DIR="$HOME/.local/share/themes/catppuccin-mocha-mauve"
 
-if [[ ! -d "$THEME_DIR" ]]; then
-  log "Descargando tema GTK Catppuccin Mocha Mauve..."
-  GTK_URL=$(curl -s https://api.github.com/repos/catppuccin/gtk/releases/latest \
-    | grep -o '"browser_download_url": "[^"]*mocha-mauve[^"]*"' \
-    | grep -o 'https://[^"]*' | head -1)
-  if [[ -n "$GTK_URL" ]]; then
-    wget -qO /tmp/catppuccin-gtk.zip "$GTK_URL"
-    unzip -q /tmp/catppuccin-gtk.zip -d /tmp/catppuccin-gtk
-    mkdir -p "$HOME/.local/share/themes"
-    cp -r /tmp/catppuccin-gtk/catppuccin-mocha-mauve-standard+default "$THEME_DIR"
-    rm -rf /tmp/catppuccin-gtk.zip /tmp/catppuccin-gtk
-    ok "Tema GTK instalado"
-  else
-    warn "No se pudo descargar el tema GTK — instálalo manualmente"
-  fi
-else
-  ok "Tema GTK ya instalado"
-fi
-
-log "Aplicando tema GTK, iconos y cursor..."
+log "Aplicando tema GTK3, iconos y cursor..."
 gsettings set org.gnome.desktop.interface gtk-theme      'catppuccin-mocha-mauve'
 gsettings set org.gnome.desktop.interface icon-theme     'Papirus-Dark'
 gsettings set org.gnome.desktop.interface cursor-theme   'Bibata-Modern-Classic'
 gsettings set org.gnome.desktop.interface font-name      'JetBrainsMono Nerd Font 11'
-ok "GTK theme, iconos y cursor aplicados"
+ok "GTK3 theme, iconos y cursor aplicados (gsettings)"
+
+# GTK4 ignora gsettings gtk-theme — necesita los archivos en ~/.config/gtk-4.0/
+log "Aplicando tema GTK4 (Nautilus, GNOME apps)..."
+GTK4_CONFIG="$HOME/.config/gtk-4.0"
+mkdir -p "$GTK4_CONFIG"
+cp "$THEME_DIR/gtk-4.0/gtk.css"      "$GTK4_CONFIG/gtk.css"
+cp "$THEME_DIR/gtk-4.0/gtk-dark.css" "$GTK4_CONFIG/gtk-dark.css"
+rm -rf "$GTK4_CONFIG/assets"
+cp -r  "$THEME_DIR/gtk-4.0/assets"   "$GTK4_CONFIG/assets"
+ok "GTK4 theme aplicado (~/.config/gtk-4.0/)"
+
+# ── Wallpaper ─────────────────────────────────────────────────────────────────
+header "Wallpaper"
+WALLPAPER_DIR="$HOME/.local/share/wallpapers"
+WALLPAPER="$WALLPAPER_DIR/wallpaper.jpg"
+mkdir -p "$WALLPAPER_DIR"
+
+if [[ ! -f "$WALLPAPER" && ! -L "$WALLPAPER" ]]; then
+  EXISTING=$(find "$WALLPAPER_DIR" -maxdepth 1 \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.webp" \) ! -name "wallpaper.jpg" 2>/dev/null | head -1)
+  if [[ -n "$EXISTING" ]]; then
+    ln -sf "$(realpath "$EXISTING")" "$WALLPAPER"
+    ok "Wallpaper: enlazado $(basename "$EXISTING") → wallpaper.jpg"
+  else
+    warn "No se encontró wallpaper — coloca una imagen en $WALLPAPER"
+  fi
+else
+  ok "Wallpaper configurado: $WALLPAPER"
+fi
 
 # ── Resumen ───────────────────────────────────────────────────────────────────
 echo -e "\n${GREEN}${BOLD}━━━ Instalación completa ━━━${NC}"
