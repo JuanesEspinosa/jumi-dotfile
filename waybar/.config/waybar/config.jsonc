@@ -2,7 +2,7 @@
   {
     "layer": "top",
     "position": "top",
-    "height": 48,
+    "height": 50,
     "spacing": 0,
     "margin-top": 6,
     "margin-left": 12,
@@ -22,21 +22,24 @@
       "network",
       "pulseaudio",
       "tray",
+      "custom/quicksettings",
       "custom/power"
     ],
 
     "hyprland/workspaces": {
       "format": "{icon}",
       "format-icons": {
-        "1": "󰈹",
-        "2": "󰨞",
-        "3": "󰖟",
-        "4": "󰆼",
-        "5": "󰭹",
-        "urgent": ""
+        "term":  "󰆍",
+        "code":  "󰨞",
+        "web":   "󰖟",
+        "db":    "󰆼",
+        "media": "󰝚",
+        "misc":  "󰇘",
+        "urgent": "",
+        "default": ""
       },
       "persistent-workspaces": {
-        "*": [1, 2, 3, 4, 5]
+        "*": [1, 2, 3, 4, 5, 6]
       }
     },
 
@@ -104,6 +107,12 @@
     "tray": {
       "spacing": 8,
       "icon-size": 15
+    },
+
+    "custom/quicksettings": {
+      "format": "󰒓",
+      "on-click": "~/.config/waybar/modules/quick-settings.sh",
+      "tooltip": false
     },
 
     "custom/power": {

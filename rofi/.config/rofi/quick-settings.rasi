@@ -1,0 +1,60 @@
+/* quick-settings.rasi — Panel de ajustes rápidos tipo GNOME
+   Sin barra de búsqueda, posicionado en la esquina superior derecha */
+@import "catppuccin-current.rasi"
+
+window {
+    background-color: @bg0;
+    border:           1px solid @bg3;
+    border-radius:    16px;
+    width:            300px;
+    location:         northeast;
+    anchor:           northeast;
+    x-offset:         -12px;
+    y-offset:         62px;
+    padding:          8px;
+}
+
+mainbox {
+    background-color: transparent;
+    children:         [ listview ];
+    spacing:          0px;
+}
+
+inputbar    { enabled: false; }
+mode-switcher { enabled: false; }
+
+listview {
+    background-color: transparent;
+    columns:          1;
+    spacing:          1px;
+    scrollbar:        false;
+    fixed-height:     false;
+    cycle:            false;
+}
+
+element {
+    background-color: transparent;
+    border-radius:    10px;
+    padding:          9px 16px;
+    cursor:           pointer;
+    orientation:      horizontal;
+    spacing:          0px;
+}
+
+element-text {
+    background-color: transparent;
+    text-color:       @fg0;
+    vertical-align:   0.5;
+    expand:           true;
+}
+
+element.normal.normal    { background-color: transparent; }
+element.alternate.normal { background-color: alpha(@bg1, 0.5); }
+
+element.selected.normal {
+    background-color: @bg2;
+}
+
+element-text.selected.normal {
+    text-color: @accent;
+}
