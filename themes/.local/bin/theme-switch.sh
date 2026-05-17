@@ -69,10 +69,19 @@ else
   echo "  ⚠ Tema GTK '$GTK_THEME_NAME' no instalado — instala con install.sh"
 fi
 
-# 5. Recargar Hyprland (puede matar el proceso en algunos contextos — va al final)
+# 5. Kvantum — cambiar tema Qt
+KVANTUM_THEME="catppuccin-${1:-mocha}-mauve"
+if [[ -d "$HOME/.config/Kvantum/$KVANTUM_THEME" ]]; then
+  kvantummanager --set "$KVANTUM_THEME" 2>/dev/null || true
+  echo "  ✓ Kvantum theme: $KVANTUM_THEME"
+else
+  echo "  ⚠ Kvantum theme '$KVANTUM_THEME' no instalado"
+fi
+
+# 7. Recargar Hyprland (puede matar el proceso en algunos contextos — va al final)
 hyprctl reload
 
-# 6. Recargar daemons
+# 8. Recargar daemons
 pkill -SIGUSR1 kitty 2>/dev/null || true
 
 if pgrep -x waybar > /dev/null; then
@@ -83,7 +92,7 @@ if pgrep -x dunst > /dev/null; then
   pkill dunst && dunst &
 fi
 
-# 7. Cerrar Nautilus para que recargue CSS de GTK4 desde disco al reabrir
+# 9. Cerrar Nautilus para que recargue CSS de GTK4 desde disco al reabrir
 # libadwaita aplica gtk-dark.css sobre el gtk.css cacheado en memoria al
 # volver a modo oscuro — kill fuerza relectura completa al próximo launch
 if pgrep -f "nautilus" > /dev/null 2>&1; then

@@ -118,6 +118,27 @@ else
   ok "Yazi ya instalado: $(yazi --version)"
 fi
 
+# ── Cursor Bibata-Modern-Classic ──────────────────────────────────────────────
+header "Cursor Bibata-Modern-Classic"
+CURSOR_DIR="$HOME/.local/share/icons/Bibata-Modern-Classic"
+if [[ ! -d "$CURSOR_DIR" ]]; then
+  log "Descargando cursor Bibata-Modern-Classic..."
+  CURSOR_URL=$(curl -s https://api.github.com/repos/ful1e5/Bibata_Cursor/releases/latest \
+    | python3 -c "import json,sys; data=json.load(sys.stdin); url=[a['browser_download_url'] for a in data['assets'] if a['name']=='Bibata-Modern-Classic.tar.xz']; print(url[0] if url else '')")
+  if [[ -n "$CURSOR_URL" ]]; then
+    wget -qO /tmp/bibata-classic.tar.xz "$CURSOR_URL"
+    tar -xf /tmp/bibata-classic.tar.xz -C /tmp/
+    mkdir -p "$HOME/.local/share/icons"
+    mv /tmp/Bibata-Modern-Classic "$HOME/.local/share/icons/"
+    rm -f /tmp/bibata-classic.tar.xz
+    ok "Cursor Bibata-Modern-Classic instalado"
+  else
+    warn "No se pudo obtener URL del cursor — instálalo manualmente desde github.com/ful1e5/Bibata_Cursor"
+  fi
+else
+  ok "Cursor Bibata-Modern-Classic ya instalado"
+fi
+
 # ── Fuente JetBrainsMono Nerd Font ────────────────────────────────────────────
 header "Fuentes"
 FONT_DIR="$HOME/.local/share/fonts"
@@ -233,6 +254,34 @@ cp "$THEME_DIR/gtk-4.0/gtk-dark.css" "$GTK4_CONFIG/gtk-dark.css"
 rm -rf "$GTK4_CONFIG/assets"
 cp -r  "$THEME_DIR/gtk-4.0/assets"   "$GTK4_CONFIG/assets"
 ok "GTK4 theme aplicado (~/.config/gtk-4.0/)"
+
+# ── Kvantum — temas Catppuccin para Qt ───────────────────────────────────────
+header "Kvantum (Qt theming)"
+
+install_kvantum_flavor() {
+  local FLAVOR="$1"
+  local KV_DIR="$HOME/.config/Kvantum/catppuccin-${FLAVOR}-mauve"
+  if [[ ! -d "$KV_DIR" ]]; then
+    log "Descargando Kvantum theme ${FLAVOR^} Mauve..."
+    mkdir -p "$KV_DIR"
+    BASE_URL="https://raw.githubusercontent.com/catppuccin/kvantum/main/themes/catppuccin-${FLAVOR}-mauve"
+    wget -qO "$KV_DIR/catppuccin-${FLAVOR}-mauve.kvconfig" "$BASE_URL/catppuccin-${FLAVOR}-mauve.kvconfig"
+    wget -qO "$KV_DIR/catppuccin-${FLAVOR}-mauve.svg"     "$BASE_URL/catppuccin-${FLAVOR}-mauve.svg"
+    ok "Kvantum theme ${FLAVOR^} instalado"
+  else
+    ok "Kvantum theme ${FLAVOR^} ya instalado"
+  fi
+}
+
+install_kvantum_flavor mocha
+install_kvantum_flavor latte
+
+if command -v kvantummanager &>/dev/null; then
+  kvantummanager --set catppuccin-mocha-mauve 2>/dev/null || true
+  ok "Kvantum: catppuccin-mocha-mauve aplicado"
+else
+  warn "kvantummanager no encontrado — instala qt-style-kvantum"
+fi
 
 # ── Wallpaper ─────────────────────────────────────────────────────────────────
 header "Wallpaper"
