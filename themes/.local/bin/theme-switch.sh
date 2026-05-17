@@ -61,9 +61,35 @@ SETTINGS
   cp -r  "$GTK_THEME_DIR/gtk-4.0/assets"   "$GTK4_CONFIG/assets"
   # Toggle color-scheme por "default" primero para forzar señal dconf aunque
   # el valor destino sea el mismo que ya habia (libadwaita no reacciona si no hay cambio)
-  gsettings set org.gnome.desktop.interface color-scheme "default"    2>/dev/null || true
-  gsettings set org.gnome.desktop.interface color-scheme "$COLOR_SCHEME" 2>/dev/null || true
-  gsettings set org.gnome.desktop.interface gtk-theme    "$GTK_THEME_NAME" 2>/dev/null || true
+  gsettings set org.gnome.desktop.interface color-scheme "default"           2>/dev/null || true
+  gsettings set org.gnome.desktop.interface color-scheme "$COLOR_SCHEME"     2>/dev/null || true
+  gsettings set org.gnome.desktop.interface gtk-theme    "$GTK_THEME_NAME"   2>/dev/null || true
+  gsettings set org.gnome.desktop.interface cursor-theme "Bibata-Modern-Classic" 2>/dev/null || true
+  gsettings set org.gnome.desktop.interface cursor-size  24                  2>/dev/null || true
+
+  # gtk-3.0 settings (puede sobreescribir cursor si tiene valores viejos de KDE)
+  mkdir -p "$HOME/.config/gtk-3.0"
+  cat > "$HOME/.config/gtk-3.0/settings.ini" << GTKEOF
+[Settings]
+gtk-application-prefer-dark-theme=${PREFER_DARK}
+gtk-cursor-theme-name=Bibata-Modern-Classic
+gtk-cursor-theme-size=24
+gtk-decoration-layout=icon:minimize,maximize,close
+gtk-enable-animations=true
+gtk-font-name=JetBrainsMono Nerd Font 11
+gtk-icon-theme-name=Papirus-Dark
+gtk-theme-name=${GTK_THEME_NAME}
+GTKEOF
+
+  # gtkrc-2.0 (GTK2 legacy)
+  cat > "$HOME/.gtkrc-2.0" << GTKEOF
+gtk-cursor-theme-name="Bibata-Modern-Classic"
+gtk-cursor-theme-size=24
+gtk-theme-name="${GTK_THEME_NAME}"
+gtk-icon-theme-name="Papirus-Dark"
+gtk-font-name="JetBrainsMono Nerd Font 11"
+GTKEOF
+
   echo "  ✓ GTK theme aplicado (prefer-dark=${PREFER_DARK})"
 else
   echo "  ⚠ Tema GTK '$GTK_THEME_NAME' no instalado — instala con install.sh"
