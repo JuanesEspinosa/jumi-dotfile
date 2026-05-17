@@ -139,6 +139,13 @@ else
   ok "Cursor Bibata-Modern-Classic ya instalado"
 fi
 
+# Symlink en ~/.icons para que XCURSOR_PATH lo encuentre (busca ahi antes que ~/.local/share/icons)
+mkdir -p "$HOME/.icons"
+if [[ ! -L "$HOME/.icons/Bibata-Modern-Classic" ]] && [[ -d "$CURSOR_DIR" ]]; then
+  ln -sf "$CURSOR_DIR" "$HOME/.icons/Bibata-Modern-Classic"
+  ok "Symlink ~/.icons/Bibata-Modern-Classic creado"
+fi
+
 # ── Fuente JetBrainsMono Nerd Font ────────────────────────────────────────────
 header "Fuentes"
 FONT_DIR="$HOME/.local/share/fonts"
